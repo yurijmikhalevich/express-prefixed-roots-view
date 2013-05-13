@@ -14,6 +14,7 @@ var path = require('path')
  * Cross-platform function that checks, whether the path is absolute, copied from express/lib/utils
  * @param {String} path
  * @returns {boolean}
+ * @api private
  */
 
 var isAbsolute = function(path){
@@ -56,27 +57,52 @@ function View(name, options) {
 /**
  * Lookup view by the given `path`
  *
- * @param {Object} path
+ * @param {String} path
  * @return {String}
  * @api private
  */
 
 View.prototype.lookup = function(path) {
+  var root = this.roots[''];
+  var lookedUp;
+  if (root) {
+    // if base root exists, check it first
+    lookedUp = this.lookupOne(root, path);
+    if (lookedUp) { return lookedUp; }
+  }
+  var slashIndex = path.indexOf('/');
+  if (slashIndex == -1) { slashIndex = path.indexOf('\\'); }
+  if (slashIndex > 0) {
+    // if contains prefix
+    var prefix = path.substring(0, slashIndex);
+    root = this.roots[prefix];
+    if (root) {
+      // if prefixed root exists, check it
+      lookedUp = this.lookupOne(root, path.substring(slashIndex + 1));
+      if (lookedUp) { return lookedUp; }
+    }
+  }
+};
+
+/**
+ * Lookup view by the given `path`
+ *
+ * @param {String} root
+ * @param {String} path
+ * @return {String}
+ * @api private
+ */
+
+View.prototype.lookupOne = function(root, path) {
   var ext = this.ext;
 
-  for (var prefix in this.roots) {
-    if (!this.roots.hasOwnProperty(prefix)) { continue; }
+  // <path>.<engine>
+  if (!isAbsolute(path)) path = join(root, path);
+  if (exists(path)) return path;
 
-    path = path.replace(new RegExp('^' + prefix), '');
-
-    // <path>.<engine>
-    if (!isAbsolute(path)) path = join(this.roots[prefix], path);
-    if (exists(path)) return path;
-
-    // <path>/index.<engine>
-    path = join(dirname(path), basename(path, ext), 'index' + ext);
-    if (exists(path)) return path;
-  }
+  // <path>/index.<engine>
+  path = join(dirname(path), basename(path, ext), 'index' + ext);
+  if (exists(path)) return path;
 };
 
 /**

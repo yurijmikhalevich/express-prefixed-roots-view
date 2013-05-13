@@ -6,14 +6,20 @@ Now, you can use multiple view dirs with express and use prefixes to access temp
 
 Compatible with express 3.x. Tested with express 3.2.x.
 
+You can use npm for install the last stable version:
+
+```bash
+$ npm install express-prefixed-roots-view
+```
+
 Usage:
 
 ```javascript
 app.set('view', require('express-prefixed-roots-view'));
 app.set('views', {
   '': __dirname + '/views',
-  'module/': __dirname + '/module/views',
-  'module2/': __dirname + '/module2/views'
+  'module': __dirname + '/module/views',
+  'module2': __dirname + '/module2/views'
 });
 ```
 
