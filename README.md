@@ -18,5 +18,8 @@ app.set('views', {
 ```
 
 Now, when you call res.render('index'), it only tries to render '/views/index'.
-When your call res.render('module/index'), it tries to render '/views/module/index', if such file does not exists, it tries to render '/module/views/index'.
+
+When your call res.render('module/index'), it tries to render '/views/module/index',
+if such file does not exists, it tries to render '/module/views/index'.
+
 So, you can override templates, provided with modules.
