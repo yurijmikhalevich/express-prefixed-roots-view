@@ -1,0 +1,23 @@
+{
+  "name": "express-prefixed-roots-view",
+  "description": "Alternative View class, provides another lookup method based on mappings prefix: dir",
+  "version": "1.0",
+  "author": {
+    "name": "Yurij Mikhalevich",
+    "email": "0@39.yt"
+  },
+  "keywords": [
+    "express",
+    "view",
+    "lookup",
+    "prefix",
+    "multiple directories",
+    "router"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/39dotyt/express-prefixed-roots-view"
+  },
+  "main": "index",
+  "readmeFilename": "README.md"
+}
