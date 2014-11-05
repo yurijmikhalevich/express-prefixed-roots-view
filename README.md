@@ -1,5 +1,7 @@
 # express-prefixed-roots-view
 
+# This module is abandoned. If you want to maintain this module, please contact me via 0@39.yt
+
 Alternative View class, provides another lookup method based on mappings prefix: dir.
 
 Now, you can use multiple view dirs with express and use prefixes to access templates in it.
